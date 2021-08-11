@@ -1,8 +1,7 @@
 from datetime import date
-import os
+
 import numpy as np
 import pandas as pd
-import pkg_resources
 
 
 def _get_summer(df, summer_months=[*range(6, 9)]):

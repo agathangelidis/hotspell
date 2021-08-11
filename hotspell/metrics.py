@@ -1,12 +1,7 @@
-import os
 import numpy as np
 import pandas as pd
-from .indices import _load_index
-from .utils import (
-    _keep_or_drop_year,
-    _get_summer,
-    _pct_to_days,
-)
+
+from .utils import _keep_or_drop_year, _get_summer, _pct_to_days
 
 
 def _get_annual_metrics(

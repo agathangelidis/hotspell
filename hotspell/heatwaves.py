@@ -1,15 +1,13 @@
-"""
-Returns the dates of heatwaves using a predefined or a custom heatwave index.
-"""
-
-from operator import add, sub
 import datetime
+from operator import add, sub
 import os
+
 import numpy as np
 import pandas as pd
-from .utils import _import_data, _get_summer
+
 from .indices import Index, _load_index
 from .metrics import _get_annual_metrics
+from .utils import _import_data, _get_summer
 
 
 def get_heatwaves(

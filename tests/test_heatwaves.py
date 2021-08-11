@@ -1,7 +1,9 @@
 import os
 import pkg_resources
+
 import numpy as np
 import pandas as pd
+
 from hotspell.heatwaves import get_heatwaves
 
 

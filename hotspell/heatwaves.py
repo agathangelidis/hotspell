@@ -5,7 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from .indices import Index, _load_index
+from .indices import HeatwaveIndex, _load_index
 from .metrics import _get_annual_metrics
 from .utils import _import_data, _get_summer
 
@@ -25,7 +25,7 @@ def get_heatwaves(
     max_missing_pct=5,
 ):
     if index_name is None:
-        hw_index = Index(
+        hw_index = HeatwaveIndex(
             name="custom",
             var=var,
             pct=pct,

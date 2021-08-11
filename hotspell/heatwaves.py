@@ -65,13 +65,15 @@ def get_heatwaves(
         annual_metrics = _get_annual_metrics(
             heatwaves, timeseries_ref_period, timeseries, max_missing_pct
         )
+    else:
+        annual_metrics = None
 
     if export is True:
         _export_heatwaves(heatwaves, station, hw_index.name)
         if metrics is True:
             _export_annual_metrics(annual_metrics, station, hw_index.name)
 
-    return heatwaves
+    return heatwaves, annual_metrics
 
 
 def _create_daily_windows(window_length):

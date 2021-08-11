@@ -12,7 +12,7 @@ def test_output_custom_index():
         "hotspell", os.path.join("datasets", "test_input.csv"),
     )
 
-    output = get_heatwaves(
+    output, _ = get_heatwaves(
         station=station,
         var="tmax",
         pct=90,
@@ -41,7 +41,7 @@ def test_output_predefined_index():
     )
 
     index_name = "test"
-    output = get_heatwaves(
+    output, _ = get_heatwaves(
         station=station,
         index_name=index_name,
         ref_years=["1970-01-01", "1971-12-31"],

@@ -40,7 +40,7 @@ def test_output_predefined_index():
         "hotspell", os.path.join("datasets", "test_input.csv"),
     )
 
-    index_name = "test"
+    index_name = "_test"
     output, _ = get_heatwaves(
         station=station,
         index_name=index_name,

@@ -5,37 +5,19 @@ import os
 import numpy as np
 import pandas as pd
 
-from .indices import HeatwaveIndex, _load_index
 from .metrics import _get_annual_metrics
 from .utils import _import_data, _get_summer
 
 
 def get_heatwaves(
     station,
+    hw_index,
     ref_years=["1961-01-01", "1990-12-31"],
-    index_name=None,
-    var=None,
-    pct=None,
-    fixed_thres=None,
-    min_duration=None,
-    window_length=None,
     summer_months=[*range(6, 9)],
     export=True,
     metrics=True,
     max_missing_pct=5,
 ):
-    if index_name is None:
-        hw_index = HeatwaveIndex(
-            name="custom",
-            var=var,
-            pct=pct,
-            fixed_thres=fixed_thres,
-            min_duration=min_duration,
-            window_length=window_length,
-        )
-    else:
-        hw_index = _load_index(index_name)
-
     daily_windows = _create_daily_windows(hw_index.window_length)
 
     timeseries_ref_period = _import_data(

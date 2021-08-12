@@ -33,81 +33,95 @@ class HeatwaveIndex:
         self.window_length = window_length
 
 
-def _load_index(index_name):
-    """Return a HeatwaveIndex using a heatwave index name.
-    
-        It follows the naming conventions of Perkins & Alexander (2013)
-    """
-    if index_name == "ctx95pct":
+def index(
+    name=None,
+    var=None,
+    pct=None,
+    fixed_thres=None,
+    min_duration=None,
+    window_length=None,
+):
+    if name == "ctx95pct":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmax",
             pct=95,
             fixed_thres=None,
             min_duration=3,
             window_length=15,
         )
-    elif index_name == "ctn95pct":
+    elif name == "ctn95pct":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmin",
             pct=95,
             fixed_thres=None,
             min_duration=3,
             window_length=15,
         )
-    elif index_name == "ctx90pct":
+    elif name == "ctx90pct":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmax",
             pct=90,
             fixed_thres=None,
             min_duration=3,
             window_length=15,
         )
-    elif index_name == "ctn90pct":
+    elif name == "ctn90pct":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmin",
             pct=90,
             fixed_thres=None,
             min_duration=3,
             window_length=15,
         )
-    elif index_name == "tx90p":
+    elif name == "tx90p":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmax",
             pct=90,
             fixed_thres=None,
             min_duration=1,
             window_length=5,
         )
-    elif index_name == "tn90p":
+    elif name == "tn90p":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmin",
             pct=90,
             fixed_thres=None,
             min_duration=1,
             window_length=5,
         )
-    elif index_name == "wsdi":
+    elif name == "wsdi":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmax",
             pct=90,
             fixed_thres=None,
             min_duration=6,
             window_length=5,
         )
-    elif index_name == "_test":
+    elif name == "test_index":
         hw_index = HeatwaveIndex(
-            name=index_name,
+            name=name,
             var="tmax",
             pct=90,
             fixed_thres=None,
             min_duration=3,
             window_length=3,
         )
+    else:
+        hw_index = HeatwaveIndex(
+            name=name,
+            var=var,
+            pct=pct,
+            fixed_thres=fixed_thres,
+            min_duration=min_duration,
+            window_length=window_length,
+        )
+    if hw_index.name is None:
+        hw_index.name = "custom"
     return hw_index

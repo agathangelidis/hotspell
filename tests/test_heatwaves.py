@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from hotspell.heatwaves import get_heatwaves
+from hotspell.indices import index
 
 
 def test_output_custom_index():
@@ -12,12 +13,11 @@ def test_output_custom_index():
         "hotspell", os.path.join("datasets", "test_input.csv"),
     )
 
+    hw_index = index(var="tmax", pct=90, min_duration=3, window_length=3,)
+
     output, _ = get_heatwaves(
         station=station,
-        var="tmax",
-        pct=90,
-        min_duration=3,
-        window_length=3,
+        hw_index=hw_index,
         ref_years=["1970-01-01", "1971-12-31"],
         export=False,
         metrics=False,
@@ -40,10 +40,12 @@ def test_output_predefined_index():
         "hotspell", os.path.join("datasets", "test_input.csv"),
     )
 
-    index_name = "_test"
+    index_name = "test_index"
+    hw_index = index(name=index_name)
+
     output, _ = get_heatwaves(
         station=station,
-        index_name=index_name,
+        hw_index=hw_index,
         ref_years=["1970-01-01", "1971-12-31"],
         export=True,
         metrics=True,

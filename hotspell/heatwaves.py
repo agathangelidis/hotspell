@@ -12,11 +12,11 @@ from .utils import _import_data, _get_summer
 def get_heatwaves(
     station,
     hw_index,
-    ref_years=["1961-01-01", "1990-12-31"],
-    summer_months=[*range(6, 9)],
+    ref_years=("1961-01-01", "1990-12-31"),
+    summer_months=(6, 7, 8),
     export=True,
     metrics=True,
-    max_missing_pct=5,
+    max_missing_days_pct=5,
 ):
     daily_windows = _create_daily_windows(hw_index.window_length)
 
@@ -45,7 +45,11 @@ def get_heatwaves(
 
     if metrics is True:
         annual_metrics = _get_annual_metrics(
-            heatwaves, timeseries_ref_period, timeseries, max_missing_pct
+            heatwaves,
+            timeseries_ref_period,
+            timeseries,
+            max_missing_days_pct,
+            summer_months,
         )
     else:
         annual_metrics = None
@@ -117,8 +121,14 @@ def _compute_daily_thresholds(
 
 
 def _extend_plus_minus_one_month(months):
-    months_extended = [months[0] - 1, *months, months[-1] + 1]
-    return months_extended
+    months = list(months)
+    if months[0] == 1:
+        months_extended = [12, *months, months[-1] + 1]
+    elif months[-1] == 12:
+        months_extended = [months[0] - 1, *months, 1]
+    else:
+        months_extended = [months[0] - 1, *months, months[-1] + 1]
+    return tuple(sorted(months_extended))
 
 
 def _add_threshold_to_timeseries(timeseries, daily_thresholds):

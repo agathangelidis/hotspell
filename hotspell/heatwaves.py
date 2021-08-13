@@ -9,7 +9,13 @@ from .metrics import _get_annual_metrics
 from .utils import _import_data, _get_summer
 
 
-def heatwaves(
+class HeatWaves:
+    def __init__(self, events, metrics):
+        self.events = events
+        self.metrics = metrics
+
+
+def get_heatwaves(
     filename,
     hw_index,
     ref_years=("1961-01-01", "1990-12-31"),
@@ -59,7 +65,8 @@ def heatwaves(
         if metrics is True:
             _export_annual_metrics(annual_metrics, filename, hw_index.name)
 
-    return heatwaves, annual_metrics
+    output = _create_output_object(heatwaves, annual_metrics)
+    return output
 
 
 def _create_daily_windows(window_length):
@@ -195,3 +202,8 @@ def _export_annual_metrics(metrics, filename, index_name):
         f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves_metrics.csv"
     )
     metrics.to_csv(output_file, index=True, date_format="%Y")
+
+
+def _create_output_object(heatwaves, annual_metrics):
+    output = HeatWaves(events=heatwaves, metrics=annual_metrics)
+    return output

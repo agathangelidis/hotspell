@@ -21,7 +21,7 @@ def get_heatwaves(
     daily_windows = _create_daily_windows(hw_index.window_length)
 
     timeseries_ref_period = _import_data(
-        var=hw_index.var, station=station, years=ref_years
+        filename=station, var=hw_index.var, years=ref_years
     )
 
     daily_thresholds = _compute_daily_thresholds(
@@ -31,7 +31,7 @@ def get_heatwaves(
         hw_index=hw_index,
     )
 
-    timeseries = _import_data(var=hw_index.var, station=station)
+    timeseries = _import_data(filename=station, var=hw_index.var)
     timeseries = _add_threshold_to_timeseries(timeseries, daily_thresholds)
 
     heatwaves = _find_heatwaves(timeseries)

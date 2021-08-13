@@ -1,4 +1,4 @@
-class HeatwaveIndex:
+class HeatWaveIndex:
     """
     A class used to represent a heat wave index.
     
@@ -42,7 +42,7 @@ def index(
     window_length=None,
 ):
     if name == "ctx95pct":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmax",
             pct=95,
@@ -51,7 +51,7 @@ def index(
             window_length=15,
         )
     elif name == "ctn95pct":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmin",
             pct=95,
@@ -60,7 +60,7 @@ def index(
             window_length=15,
         )
     elif name == "ctx90pct":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmax",
             pct=90,
@@ -69,7 +69,7 @@ def index(
             window_length=15,
         )
     elif name == "ctn90pct":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmin",
             pct=90,
@@ -78,7 +78,7 @@ def index(
             window_length=15,
         )
     elif name == "tx90p":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmax",
             pct=90,
@@ -87,7 +87,7 @@ def index(
             window_length=5,
         )
     elif name == "tn90p":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmin",
             pct=90,
@@ -96,7 +96,7 @@ def index(
             window_length=5,
         )
     elif name == "wsdi":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmax",
             pct=90,
@@ -105,7 +105,7 @@ def index(
             window_length=5,
         )
     elif name == "test_index":
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var="tmax",
             pct=90,
@@ -114,7 +114,7 @@ def index(
             window_length=3,
         )
     else:
-        hw_index = HeatwaveIndex(
+        hw_index = HeatWaveIndex(
             name=name,
             var=var,
             pct=pct,

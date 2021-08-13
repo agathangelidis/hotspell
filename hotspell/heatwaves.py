@@ -9,8 +9,8 @@ from .metrics import _get_annual_metrics
 from .utils import _import_data, _get_summer
 
 
-def get_heatwaves(
-    station,
+def heatwaves(
+    filename,
     hw_index,
     ref_years=("1961-01-01", "1990-12-31"),
     summer_months=(6, 7, 8),
@@ -21,7 +21,7 @@ def get_heatwaves(
     daily_windows = _create_daily_windows(hw_index.window_length)
 
     timeseries_ref_period = _import_data(
-        filename=station, var=hw_index.var, years=ref_years
+        filename=filename, var=hw_index.var, years=ref_years
     )
 
     daily_thresholds = _compute_daily_thresholds(
@@ -31,7 +31,7 @@ def get_heatwaves(
         hw_index=hw_index,
     )
 
-    timeseries = _import_data(filename=station, var=hw_index.var)
+    timeseries = _import_data(filename=filename, var=hw_index.var)
     timeseries = _add_threshold_to_timeseries(timeseries, daily_thresholds)
 
     heatwaves = _find_heatwaves(timeseries)
@@ -55,9 +55,9 @@ def get_heatwaves(
         annual_metrics = None
 
     if export is True:
-        _export_heatwaves(heatwaves, station, hw_index.name)
+        _export_heatwaves(heatwaves, filename, hw_index.name)
         if metrics is True:
-            _export_annual_metrics(annual_metrics, station, hw_index.name)
+            _export_annual_metrics(annual_metrics, filename, hw_index.name)
 
     return heatwaves, annual_metrics
 
@@ -185,13 +185,13 @@ def _filter_with_min_duration(heatwaves, min_duration):
     return heatwaves[heatwaves.duration >= min_duration]
 
 
-def _export_heatwaves(heatwaves, station, index_name):
-    output_file = f"{os.path.splitext(station)[0]}_{index_name}_heatwaves.csv"
+def _export_heatwaves(heatwaves, filename, index_name):
+    output_file = f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves.csv"
     heatwaves.to_csv(output_file, index=False, date_format="%d/%m/%Y")
 
 
-def _export_annual_metrics(metrics, station, index_name):
+def _export_annual_metrics(metrics, filename, index_name):
     output_file = (
-        f"{os.path.splitext(station)[0]}_{index_name}_heatwaves_metrics.csv"
+        f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves_metrics.csv"
     )
     metrics.to_csv(output_file, index=True, date_format="%Y")

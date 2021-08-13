@@ -1,2 +1,2 @@
-from .heatwaves import get_heatwaves
+from .heatwaves import heatwaves
 from .indices import index

@@ -5,13 +5,40 @@ import pandas as pd
 
 
 def _get_summer(df, summer_months):
-    "Keep summer months only."
+    """
+    Keep only the summer period of a DataFrame that has a DateTimeIndex.
+
+    Parameters
+    ----------
+    df : DataFrame
+    summer_months : tuple(int, int)
+
+    Returns
+    -------
+    DataFrame
+    """
     return df.loc[df.index.month.isin(summer_months)].copy()
 
 
-def _import_data(var, station, years=None):
-    "Imports the weather station data from a text file."
-    df = pd.read_csv(station, sep=",", header=None, index_col=None)
+def _import_data(filename, var, years=None):
+    """
+    Read the weather data from a csv file into a DataFrame and preprocess them. 
+    
+    It requires specific columns to be included in the csv file.
+    If `years` is set it subsets the DataFrame by the given years.
+
+    Parameters
+    ----------
+    filename : str or path object
+    var : str, one of 'tmin', 'tmax'
+        The meteorological variable to keep.
+    years : tuple(int, int)
+
+    Returns
+    -------
+    DataFrame
+    """
+    df = pd.read_csv(filename, sep=",", header=None, index_col=None)
     df = _preprocess_data(df, var)
     df["date"] = pd.to_datetime(df["date"], format="%Y%m%d")
     df.set_index("date", inplace=True)

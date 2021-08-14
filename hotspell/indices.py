@@ -41,6 +41,32 @@ def index(
     min_duration=None,
     window_length=None,
 ):
+    """
+    Create a predefined or custom HeatWaveIndex object.
+
+    Parameters
+    ----------
+    name : str
+        The name of the index. For predefined indices it follows the naming
+        conventions of Perkins & Alexander (2013)
+    var : str
+        The meteorological variable.
+    pct : int
+        The percentile used as a threshold.
+    fixed_thres : int or float
+        The absolute threshold of the meteorological value. If both pct and
+        fixed_thres are set, pct has precedence over fixed_thres.
+    min_duration : int
+        The minimum number of consecutive days should last so that a warm event
+        is considered a heat wave. 
+    window_length : int
+        The total number of days that a moving window has when computing the
+        percentile value for each day.
+    
+    Returns
+    -------
+    HeatWaveIndex object
+    """
     if name == "ctx95pct":
         hw_index = HeatWaveIndex(
             name=name,

@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from .metrics import _get_annual_metrics
-from .utils import _import_data, _get_summer
+from .utils import _import_data, _keep_only_summer
 
 
 class HeatWaves:
@@ -22,8 +22,26 @@ class HeatWaves:
         basic characteristics (duration and temperature statistics).
     metrics : DataFrame
         It contains the summary of heat waves per year via standard metrics.
-        Years with no heat waves have been distinguished from years with missing
+        Years with no heat waves are distinguished from years with missing
         data.
+    
+    Notes
+    -----
+    Column names of metrics correspond to:
+    hwf : Heatwave day frequency
+        The annual total sum of heatwave days
+    hwn : Heatwave number
+        The annual total sum of heatwave events
+    hwd : Heatwave duration
+        The length of the longest heatwave per year
+    hwa : Heatwave amplitude
+        Hottest day of hottest event per year (anomaly against seasonal mean)
+    hwaa : Heatwave absolute amplitude
+        Hottest day of hottest event per year
+    hwm : Heatwave mean
+        Average magnitude of all events (anomaly against seasonal mean)
+    hwdm : Heatwave duration mean
+        The average length of heatwaves per year
     """
 
     def __init__(self, events, metrics):
@@ -156,7 +174,8 @@ def _add_or_subtract_days(ser, days, op):
 
 
 def _extend_plus_minus_one_month(months):
-    """Extend by one month a collection of months in both directions.
+    """
+    Extend by one month a collection of months in both directions.
 
     Parameters
     ----------
@@ -197,7 +216,9 @@ def _compute_daily_thresholds(
     DataFrame
     """
     if summer_months:
-        daily_thresholds = _get_summer(daily_windows.copy(), summer_months)
+        daily_thresholds = _keep_only_summer(
+            daily_windows.copy(), summer_months
+        )
     else:
         daily_thresholds = daily_windows.copy()
 
@@ -242,7 +263,8 @@ def _add_threshold_to_timeseries(timeseries, daily_thresholds):
 
 
 def _find_heatwaves(timeseries, hw_index, summer_months):
-    """Find the heat wave dates according to the criteria of a heat wave index.
+    """
+    Find the heat wave dates according to the criteria of a heat wave index.
 
     Parameters
     ----------
@@ -260,7 +282,7 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
     )
 
     if summer_months:
-        timeseries = _get_summer(timeseries, summer_months)
+        timeseries = _keep_only_summer(timeseries, summer_months)
 
     heatwave_days = timeseries.copy()
 

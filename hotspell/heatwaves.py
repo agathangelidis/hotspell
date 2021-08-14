@@ -11,18 +11,19 @@ from .utils import _import_data, _get_summer
 
 class HeatWaves:
     """
-    Class for heat wave events and their metrics.
+    Class designed for storing heat wave events.
     
-    It is the holder for the output of `get_heatwaves()`.
+    It is the holder for the output of `get_heatwaves`.
     
     Parameters
     ----------
     events : DataFrame
-        It contains the start and the end of detected heat wave events, as well
-        as their basic characteristics (duration and temperature statistics).
+        It contains the dates of detected heat wave events, as well as their
+        basic characteristics (duration and temperature statistics).
     metrics : DataFrame
-        It contains the summary of heat waves per year using standard metrics.
-        It distinguishes years with no heat waves from years with missing data.
+        It contains the summary of heat waves per year via standard metrics.
+        Years with no heat waves have been distinguished from years with missing
+        data.
     """
 
     def __init__(self, events, metrics):
@@ -35,35 +36,35 @@ def get_heatwaves(
     hw_index,
     ref_years=("1961-01-01", "1990-12-31"),
     summer_months=(6, 7, 8),
+    max_missing_days_pct=10,
     export=True,
     metrics=True,
-    max_missing_days_pct=10,
 ):
     """
-    Detect heat wave events and their metrics from weather station data.
+    Detect heat wave events from weather station data.
 
     Parameters
     ----------
     filename : str or path object
-        The path of the csv file that containt the weather data. It requires
-        specific columns to be included in the csv file.
+        The path of the csv file that contains the weather data. It requires
+        specific columns to be included in the csv file in a specific order.
     hw_index : HeatWaveIndex
-        An HeatWaveIndex object created using the `index()` function.
+        An HeatWaveIndex object created using the `index` function.
     ref_years : tuple of str, default ("1961-01-01", "1990-12-31")
-        The first and the last year of the reference period. It
-        should be defined in the YYYY-MM-DD format.
+        The first and the last year of the reference period. It should be set
+        using the "YYYY-MM-DD" format.
     summer_months : tuple of int or None, default (6, 7, 8)
         A tuple with all months of the summer period. For the southern
         hemisphere it should be set as (12, 1, 2) or similar variants.
-    export : bool, default True
-        If True, the library output is exported as csv files in the same folder
-        as the input data.
-    metrics : bool, default True
-        If True, annual metrics are computed and exported if `export=True`.
     max_missing_days_pct : int, default 10
-        The percentage of maximum missing days that a year is considered valid
-        and will be included in the metrics. If a summer period is defined the
+        The percentage of maximum missing days for a year to be considered valid
+        and be included in the metrics. If a summer period has been defined the
         percentage corresponds only to this period.
+    export : bool, default True
+        If True, output is exported as csv files in the same folder as the input
+        data.
+    metrics : bool, default True
+        If True, annual metrics are computed and are exported if `export=True`.
 
     Returns
     -------
@@ -112,12 +113,12 @@ def get_heatwaves(
 
 def _create_daily_windows(window_length):
     """
-    Add to each calendar day a list of days within a moving window.
+    Add to each day  of the year a list of days within a window around this day.
 
     Parameters
     ----------
     window_length : int
-        The length in days of the moving window, centered around each day.
+        The length in days of the moving window, centered around a given day.
 
     Returns
     -------
@@ -127,8 +128,8 @@ def _create_daily_windows(window_length):
     df = pd.DataFrame(index=day_of_year)
 
     days = np.floor(window_length / 2)
-    df["after"] = _add_or_subtract_days(df, days, add)
-    df["before"] = _add_or_subtract_days(df, days, sub)
+    df["after"] = _add_or_subtract_days(df.index, days, add)
+    df["before"] = _add_or_subtract_days(df.index, days, sub)
 
     df["window"] = [
         pd.date_range(x, y).strftime("%m-%d").tolist()
@@ -137,25 +138,25 @@ def _create_daily_windows(window_length):
     return df[["window"]]
 
 
-def _add_or_subtract_days(df, days, op):
+def _add_or_subtract_days(ser, days, op):
     """
-    Add or subtract a number of days to a DatetimeIndex of a DataFrame.
+    Add or subtract a number of days.
 
     Parameters
     ----------
-    df : DataFrame
+    ser : Series or Index
     days : int or float
     op : operator object, one of `add` or `sub` 
 
     Returns
     -------
-    datetime object
+    Series
     """
-    return op(df.index, datetime.timedelta(days))
+    return op(ser, datetime.timedelta(days))
 
 
 def _extend_plus_minus_one_month(months):
-    """Extend in both directions a collection of months by one month.
+    """Extend by one month a collection of months in both directions.
 
     Parameters
     ----------
@@ -184,10 +185,10 @@ def _compute_daily_thresholds(
     Parameters
     ----------
     daily_windows : DataFrame
-        The output of `_create_daily_windows()`.
+        The output of `_create_daily_windows`.
     timeseries_ref_period : DataFrame
-        The weather data for the reference period, used to calculated the
-        percentile. 
+        The weather data for the reference period; they are used to calculated
+        the percentile. 
     hw_index : HeatWaveIndex object
     summer_months : tuple of int
 
@@ -241,12 +242,12 @@ def _add_threshold_to_timeseries(timeseries, daily_thresholds):
 
 
 def _find_heatwaves(timeseries, hw_index, summer_months):
-    """Find the dates that comply with the criteria of the heat wave index.
+    """Find the heat wave dates according to the criteria of a heat wave index.
 
     Parameters
     ----------
     timeseries : DataFrame
-        The weather data including a column with the threshold value.
+        The weather data including a column with a daily threshold value.
     hw_index : HeatWaveIndex object
     summer_months : tuple of int
 
@@ -261,9 +262,9 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
     if summer_months:
         timeseries = _get_summer(timeseries, summer_months)
 
-    heatwaves = timeseries.copy()
+    heatwave_days = timeseries.copy()
 
-    heatwaves = _group_heatwave_days(heatwaves)
+    heatwaves = _group_heatwave_days(heatwave_days)
     heatwaves = _compute_heatwave_properties(
         heatwaves=heatwaves, var=hw_index.var
     )
@@ -272,9 +273,11 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
     return heatwaves
 
 
-def _group_heatwave_days(heatwaves):
-    heatwaves["group"] = (heatwaves.over.diff(1) != 0).astype("int").cumsum()
-    return heatwaves
+def _group_heatwave_days(heatwaves_days):
+    heatwaves_days["group"] = (
+        (heatwaves_days.over.diff(1) != 0).astype("int").cumsum()
+    )
+    return heatwaves_days
 
 
 def _compute_heatwave_properties(heatwaves, var):

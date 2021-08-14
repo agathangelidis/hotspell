@@ -48,8 +48,6 @@ def test_output_predefined_index():
         hw_index=hw_index,
         ref_years=("1970-01-01", "1971-12-31"),
         max_missing_days_pct=100,
-        export=True,
-        metrics=True,
     )
     hw_events = heatwaves.events.iloc[:, 2:].astype(float).values
 
@@ -77,9 +75,8 @@ def test_output_southern_hem_predefined_index():
         hw_index=hw_index,
         ref_years=("1970-01-01", "1971-12-31"),
         summer_months=(12, 1, 2),
-        max_missing_days_pct=100,
-        export=True,
-        metrics=True,
+        export=False,
+        metrics=False,
     )
     hw_events = heatwaves.events.iloc[:, 2:].astype(float).values
 

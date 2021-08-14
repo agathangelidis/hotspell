@@ -29,7 +29,7 @@ def _import_data(filename, var, years=None):
     -------
     DataFrame
     """
-    df = pd.read_csv(filename, sep=",", header=None, index_col=None)
+    df = pd.read_csv(filename, header=None, index_col=None)
     df = _preprocess_data(df, var, years)
 
     return df

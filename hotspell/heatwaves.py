@@ -88,10 +88,8 @@ def get_heatwaves(
     -------
     HeatWaves object
      """
-
-    timeseries_ref_period = _import_data(
-        filename=filename, var=hw_index.var, years=ref_years
-    )
+    timeseries = _import_data(filename=filename, var=hw_index.var)
+    timeseries_ref_period = timeseries.loc[ref_years[0] : ref_years[-1]]
 
     daily_windows = _create_daily_windows(hw_index.window_length)
 
@@ -102,7 +100,6 @@ def get_heatwaves(
         summer_months=_extend_plus_minus_one_month(summer_months),
     )
 
-    timeseries = _import_data(filename=filename, var=hw_index.var)
     timeseries = _add_threshold_to_timeseries(timeseries, daily_thresholds)
 
     heatwaves = _find_heatwaves(

@@ -1,4 +1,15 @@
-.vscode
-__pycache__
+# Byte-compiled
+__pycache__/
+
+# Distribution / packaging
 *.egg-info
+
+# Unit tests
 .pytest_cache
+
+# Sphinx documentation
+docs/_build/
+docs/_templates/
+
+# VS Code configuration
+.vscode

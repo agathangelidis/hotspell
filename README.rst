@@ -3,8 +3,9 @@ hotspell
 """"""""
 
 Hotspell is a python package that detects past heat wave events using weather
-data. The user can choose between a range of different threshold-based or
-percentile-based heatwave indices. Alternatively a custom index can be defined.
+station data. The user can choose between a range of different threshold-based
+or percentile-based heatwave indices. Alternatively a custom index can be
+defined.
 
 The main output of hotspell is a Pandas DataFrame that includes the dates and
 characteristics of all heat waves within the study period. Additionally,

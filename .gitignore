@@ -3,6 +3,8 @@ __pycache__/
 
 # Distribution / packaging
 *.egg-info
+build/
+dist/
 
 # Unit tests
 .pytest_cache
@@ -10,6 +12,3 @@ __pycache__/
 # Sphinx documentation
 docs/_build/
 docs/_templates/
-
-# VS Code configuration
-.vscode

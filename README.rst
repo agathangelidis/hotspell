@@ -56,6 +56,27 @@ Set your data path
 
     mydata = "my_data/my_file.csv"
 
+The csv file should include the following values:
+
+- Year
+- Month
+- Day
+- Tmin
+- Tmax
+
+in the above order, **without** a header.
+
+For example:
+
++------+-----+-----+------+------+
+| 1999 | 8   | 29  | 23.2 | 37.1 |
++------+-----+-----+------+------+
+| 1999 | 8   | 30  | 24.1 | 37.7 |
++------+-----+-----+------+------+
+| ...  | ... | ... | ...  | ...  |
++------+-----+-----+------+------+
+
+
 Find the heat wave events
 
 .. code:: python
@@ -73,4 +94,4 @@ for Climate Change and its Impact*, `CLIMPACT <https://climpact.gr/main/>`_.
 ........
 License
 ........
-Hotspell is licensed under the BSD 3-clause licence.
+Hotspell is licensed under the BSD 3-clause license.

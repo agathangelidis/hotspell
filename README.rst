@@ -37,20 +37,20 @@ Then, hotspell can be installed from PyPI using pip:
 Quick Start
 ............
 
-Import the hotspell package
+1. Import the hotspell package
 
 .. code:: python
 
     import hotspell
 
-Initialize the heat wave index CTX90PCT
+2. Initialize the heat wave index CTX90PCT
 
 .. code:: python
 
     index_name = "ctx90pct"
     hw_index = hotspell.index(name=index_name)
 
-Set your data path
+3. Set your data path
 
 .. code:: python
 
@@ -77,7 +77,7 @@ For example:
 +------+-----+-----+------+------+
 
 
-Find the heat wave events
+4. Find the heat wave events
 
 .. code:: python
 

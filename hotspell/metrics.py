@@ -43,16 +43,16 @@ def _get_annual_metrics(
 
 
 def _compute_annual_metrics(df, ref_period_mean):
-    hwf = (
-        df.groupby([df.index.year], as_index=True)["duration"]
-        .sum()
-        .to_frame(name="hwf")
-    )
-
     hwn = (
         df.groupby([df.index.year], as_index=True)["duration"]
         .count()
         .to_frame(name="hwn")
+    )
+
+    hwf = (
+        df.groupby([df.index.year], as_index=True)["duration"]
+        .sum()
+        .to_frame(name="hwf")
     )
 
     hwd = (
@@ -61,9 +61,32 @@ def _compute_annual_metrics(df, ref_period_mean):
         .to_frame(name="hwd")
     )
 
+    hwdm = (
+        df.groupby([df.index.year], as_index=True)["duration"]
+        .mean()
+        .to_frame(name="hwdm")
+        .round(1)
+    )
+
+    hwm = (
+        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        .mean()
+        .to_frame(name="hwm")
+        .round(1)
+    )
+    hwm["hwm"] = np.round(hwm["hwm"] - ref_period_mean, 1)
+
+    hwma = (
+        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        .mean()
+        .to_frame(name="hwma")
+        .round(1)
+    )
+
     max_avg_tmax_dates = df.groupby([df.index.year], as_index=True)[
         "avg_tmax"
     ].transform(max)
+
     hwa = df[df["avg_tmax"] == max_avg_tmax_dates]["max_tmax"].to_frame(
         name="hwa"
     )
@@ -75,22 +98,9 @@ def _compute_annual_metrics(df, ref_period_mean):
     )
     hwaa.index = hwaa.index.year
 
-    hwm = (
-        df.groupby([df.index.year], as_index=True)["max_tmax"]
-        .mean()
-        .to_frame(name="hwm")
-        .round(1)
+    annual_metrics = pd.concat(
+        [hwn, hwf, hwd, hwdm, hwm, hwma, hwa, hwaa], axis=1
     )
-    hwm["hwm"] = np.round(hwm["hwm"] - ref_period_mean, 1)
-
-    hwdm = (
-        df.groupby([df.index.year], as_index=True)["duration"]
-        .mean()
-        .to_frame(name="hwdm")
-        .round(1)
-    )
-
-    annual_metrics = pd.concat([hwf, hwn, hwd, hwa, hwaa, hwm, hwdm], axis=1)
     annual_metrics.index.rename("year", inplace=True)
 
     return annual_metrics

@@ -28,20 +28,22 @@ class HeatWaves:
     Notes
     -----
     Column names of metrics correspond to:
-    hwf : Heatwave day frequency
-        The annual total sum of heatwave days
     hwn : Heatwave number
         The annual total sum of heatwave events
+    hwf : Heatwave day frequency
+        The annual total sum of heatwave days
     hwd : Heatwave duration
         The length of the longest heatwave per year
-    hwa : Heatwave amplitude
-        Hottest day of hottest event per year (anomaly against seasonal mean)
-    hwaa : Heatwave absolute amplitude
-        Hottest day of hottest event per year
+    hwdm : Heatwave duration (mean)
+        The average length of heatwaves per year
     hwm : Heatwave mean
         Average magnitude of all events (anomaly against seasonal mean)
-    hwdm : Heatwave duration mean
-        The average length of heatwaves per year
+    hwma : Heatwave mean (absolute value)
+        Average magnitude of all events
+    hwa : Heatwave amplitude
+        Hottest day of hottest event per year (anomaly against seasonal mean)
+    hwaa : Heatwave amplitude (absolute value)
+        Hottest day of hottest event per year
     """
 
     def __init__(self, events, metrics):

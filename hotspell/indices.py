@@ -67,11 +67,11 @@ def index(
     -------
     HeatWaveIndex object
     """
-    if name == "ctx95pct":
+    if name == "ctn90pct":
         hw_index = HeatWaveIndex(
             name=name,
-            var="tmax",
-            pct=95,
+            var="tmin",
+            pct=90,
             fixed_thres=None,
             min_duration=3,
             window_length=15,
@@ -94,28 +94,73 @@ def index(
             min_duration=3,
             window_length=15,
         )
-    elif name == "ctn90pct":
+    elif name == "ctx95pct":
         hw_index = HeatWaveIndex(
             name=name,
-            var="tmin",
-            pct=90,
+            var="tmax",
+            pct=95,
             fixed_thres=None,
             min_duration=3,
             window_length=15,
         )
-    elif name == "tx90p":
+    elif name == "hot_days":
         hw_index = HeatWaveIndex(
             name=name,
             var="tmax",
-            pct=90,
-            fixed_thres=None,
+            pct=None,
+            fixed_thres=35,
             min_duration=1,
-            window_length=5,
+            window_length=1,
+        )
+    elif name == "hot_events_daytime":
+        hw_index = HeatWaveIndex(
+            name=name,
+            var="tmax",
+            pct=None,
+            fixed_thres=35,
+            min_duration=3,
+            window_length=1,
+        )
+    elif name == "hot_events_nighttime":
+        hw_index = HeatWaveIndex(
+            name=name,
+            var="tmin",
+            pct=None,
+            fixed_thres=20,
+            min_duration=3,
+            window_length=1,
+        )
+    elif name == "summer_days":
+        hw_index = HeatWaveIndex(
+            name=name,
+            var="tmax",
+            pct=None,
+            fixed_thres=25,
+            min_duration=1,
+            window_length=1,
         )
     elif name == "tn90p":
         hw_index = HeatWaveIndex(
             name=name,
             var="tmin",
+            pct=90,
+            fixed_thres=None,
+            min_duration=1,
+            window_length=5,
+        )
+    elif name == "tropical_nights":
+        hw_index = HeatWaveIndex(
+            name=name,
+            var="tmin",
+            pct=None,
+            fixed_thres=20,
+            min_duration=1,
+            window_length=1,
+        )
+    elif name == "tx90p":
+        hw_index = HeatWaveIndex(
+            name=name,
+            var="tmax",
             pct=90,
             fixed_thres=None,
             min_duration=1,

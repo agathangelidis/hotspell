@@ -148,6 +148,11 @@ def index(
             min_duration=min_duration,
             window_length=window_length,
         )
+
     if hw_index.name is None:
         hw_index.name = "custom"
+
+    if hw_index.window_length is None:
+        hw_index.window_length = 1
+
     return hw_index

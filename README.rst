@@ -2,15 +2,19 @@
 hotspell
 """"""""
 
-Hotspell is a python package that detects past heat wave events using weather
-station data. The user can choose between a range of different threshold-based
-or percentile-based heatwave indices. Alternatively a custom index can be
-defined.
+.....
+About
+.....
 
-The main output of hotspell is a Pandas DataFrame that includes the dates and
-characteristics of all heat waves within the study period. Additionally,
-summary statistics (annual metrics) can also be computed if selected by the
-user.
+Hotspell is a Python package that detects past heat wave events using daily
+weather station data of minimum and maximum air temperature. The user can choose
+between a range of predefined threshold-based and percentile-based heatwave
+indices or alternatively can define a full customizable index.
+
+The main output of hotspell are the dates and characteristics of heat waves
+found within the study period, stored in a pandas DataFrame. If selected by the
+user, summary statistics (i.e. annual metrics) of the heat wave events are also
+computed.
 
 Definitions and naming conventions for the indices and metrics follow `Perkins &
 Alexander (2013) <https://doi.org/10.1175/JCLI-D-12-00383.1>`_.
@@ -24,8 +28,8 @@ Required dependencies are:
 - `NumPy <https://numpy.org/>`_
 - `pandas <https://pandas.pydata.org/>`_
 
-These packages should be installed beforehand using the conda environment
-management system that comes with the anaconda/miniconda python distribution.
+These packages should be installed beforehand, using the conda environment
+management system that comes with the Anaconda/Miniconda Python distribution.
 
 Then, hotspell can be installed from PyPI using pip:
 
@@ -56,7 +60,7 @@ Quick Start
 
     mydata = "my_data/my_file.csv"
 
-The csv file should include the following values:
+The CSV file should include the following columns
 
 - Year
 - Month
@@ -64,14 +68,15 @@ The csv file should include the following values:
 - Tmin
 - Tmax
 
-in the above order, **without** a header.
+in the above order, **without** a header line. Each day should be in a seperate 
+line; missing days/lines are allowed.
 
 For example:
 
 +------+-----+-----+------+------+
 | 1999 | 8   | 29  | 23.2 | 37.1 |
 +------+-----+-----+------+------+
-| 1999 | 8   | 30  | 24.1 | 37.7 |
+| 1999 | 8   | 31  | 24.1 | 37.7 |
 +------+-----+-----+------+------+
 | ...  | ... | ... | ...  | ...  |
 +------+-----+-----+------+------+
@@ -88,10 +93,12 @@ For example:
 ................
 Acknowledgements
 ................
+
 Hotspell is developed during research under the Greek project *National Network
 for Climate Change and its Impact*, `CLIMPACT <https://climpact.gr/main/>`_.
 
 ........
 License
 ........
+
 Hotspell is licensed under the BSD 3-clause license.

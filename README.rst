@@ -18,6 +18,7 @@ computed.
 
 Documentation is available at `Read the Docs
 <https://hotspell.readthedocs.io/en/latest/>`_.
+
 ............
 Installation
 ............

@@ -16,6 +16,8 @@ found within the study period, stored in a pandas DataFrame. If selected by the
 user, summary statistics (i.e. annual metrics) of the heat wave events are also
 computed.
 
+Documentation is available at `Read the Docs
+<https://hotspell.readthedocs.io/en/latest/>`_.
 ............
 Installation
 ............

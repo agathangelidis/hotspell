@@ -12,9 +12,9 @@ from .utils import _import_data, _keep_only_summer
 class HeatWaves:
     """
     Class designed for storing heat wave events.
-    
+
     It is the holder for the output of `get_heatwaves`.
-    
+
     Parameters
     ----------
     events : DataFrame
@@ -24,26 +24,28 @@ class HeatWaves:
         It contains the summary of heat waves per year via standard metrics.
         Years with no heat waves are distinguished from years with missing
         data.
-    
+
     Notes
     -----
     Column names of metrics correspond to:
-    hwn : Heatwave number
-        The annual total sum of heatwave events
-    hwf : Heatwave day frequency
-        The annual total sum of heatwave days
-    hwd : Heatwave duration
-        The length of the longest heatwave per year
-    hwdm : Heatwave duration (mean)
-        The average length of heatwaves per year
-    hwm : Heatwave mean
-        Average magnitude of all events (anomaly against seasonal mean)
-    hwma : Heatwave mean (absolute value)
-        Average magnitude of all events
-    hwa : Heatwave amplitude
-        Hottest day of hottest event per year (anomaly against seasonal mean)
-    hwaa : Heatwave amplitude (absolute value)
-        Hottest day of hottest event per year
+    
+    hwn : Heat wave number
+        The annual total sum of heat wave events
+    hwf : Heat wave day frequency
+        The annual total sum of heat wave days
+    hwd : Heat wave duration
+        The length of the longest heat wave per year
+    hwdm : Heat wave duration (mean)
+        The average length of heat waves per year
+    hwm : Heat wave magnitude
+        The average magnitude of all events (anomaly against seasonal mean)
+    hwma : Heat wave magnitude (absolute value)
+        The average magnitude of all events
+    hwa : Heat wave amplitude
+        The hottest day of hottest event per year (anomaly against seasonal
+        mean)
+    hwaa : Heat wave amplitude (absolute value)
+        The hottest day of hottest event per year
     """
 
     def __init__(self, events, metrics):

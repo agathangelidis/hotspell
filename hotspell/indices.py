@@ -7,7 +7,7 @@ class HeatWaveIndex:
     name : str
         The name of the index. For predefined indices it follows the naming
         conventions of Perkins & Alexander (2013)
-    var : str
+    var : str, one of "tmin" or "tmax"
         The meteorological variable.
     pct : int
         The percentile used as a threshold.

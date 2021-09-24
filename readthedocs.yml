@@ -1,5 +1,10 @@
 python:
   version: 3
+  setup_py_install: true
+  pip_install: true
   install:
     - requirements: docs/requirements.txt
+  extra_requirements:
+    - numpy
   system_packages: true
+

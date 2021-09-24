@@ -1,3 +1,2 @@
-hotspell
 ipykernel
 nbsphinx

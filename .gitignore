@@ -12,9 +12,8 @@ dist/
 # Sphinx documentation
 docs/_build/
 docs/_templates/
+docs/_static/
 
 # IDEs
 .vscode
 
-# Notebooks
-notebooks/

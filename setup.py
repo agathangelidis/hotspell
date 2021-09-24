@@ -6,8 +6,8 @@ long_description = (this_directory / "README.rst").read_text()
 
 setup(
     name="hotspell",
-    version="1.0.0",
-    description="Detect heatwaves from weather station data",
+    version="0.0.9",
+    description="Detect heat waves from weather station data",
     author="Ilias Agathangelidis",
     packages=["hotspell"],
     install_requires=["numpy", "pandas"],

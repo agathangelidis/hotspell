@@ -8,16 +8,13 @@ About
 
 Hotspell is a Python package that detects past heat wave events using daily
 weather station data of minimum and maximum air temperature. The user can choose
-between a range of predefined threshold-based and percentile-based heatwave
+between a range of predefined threshold-based and percentile-based heat wave
 indices or alternatively can define a full customizable index.
 
 The main output of hotspell are the dates and characteristics of heat waves
 found within the study period, stored in a pandas DataFrame. If selected by the
 user, summary statistics (i.e. annual metrics) of the heat wave events are also
 computed.
-
-Definitions and naming conventions for the indices and metrics follow `Perkins &
-Alexander (2013) <https://doi.org/10.1175/JCLI-D-12-00383.1>`_.
 
 ............
 Installation
@@ -47,14 +44,14 @@ Quick Start
 
     import hotspell
 
-2. Initialize the heat wave index CTX90PCT
+2. Choose the heat wave index CTX90PCT
 
 .. code:: python
 
     index_name = "ctx90pct"
     hw_index = hotspell.index(name=index_name)
 
-3. Set your data path
+3. Set your data path of your CSV file
 
 .. code:: python
 

@@ -88,7 +88,7 @@ GitHub: http://github.com/agathangelidis/hotspell
    :caption: Contents:
    
    installation
-   user_guide/getting_started
+   user_guide/tutorial
    user_guide/heatwave_indices
    user_guide/heatwave_metrics
    API reference <modules>

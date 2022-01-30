@@ -1,9 +1,10 @@
 import datetime
-from operator import add, sub
 import os
+from operator import add, sub
 
 import numpy as np
 import pandas as pd
+import pkg_resources
 
 from .metrics import _get_annual_metrics
 from .utils import _import_data, _keep_only_summer
@@ -143,18 +144,34 @@ def _create_daily_windows(window_length):
     -------
     Dataframe
     """
-    day_of_year = pd.date_range("1972-01-01", freq="D", periods=366)
-    df = pd.DataFrame(index=day_of_year)
+    PRECOMPUTED = [3, 15]
+    if window_length in PRECOMPUTED:
+        df = _import_precomputed_daily_windows(window_length)
+        return df
+    else:
+        day_of_year = pd.date_range("1972-01-01", freq="D", periods=366)
+        df = pd.DataFrame(index=day_of_year)
 
-    days = np.floor(window_length / 2)
-    df["after"] = _add_or_subtract_days(df.index, days, add)
-    df["before"] = _add_or_subtract_days(df.index, days, sub)
+        days = np.floor(window_length / 2)
+        df["after"] = _add_or_subtract_days(df.index, days, add)
+        df["before"] = _add_or_subtract_days(df.index, days, sub)
 
-    df["window"] = [
-        pd.date_range(x, y).strftime("%m-%d").tolist()
-        for x, y in zip(df["before"], df["after"])
-    ]
-    return df[["window"]]
+        df["window"] = [
+            pd.date_range(x, y).strftime("%m-%d").tolist()
+            for x, y in zip(df["before"], df["after"])
+        ]
+        return df[["window"]]
+
+
+def _import_precomputed_daily_windows(window_length):
+    input_file = pkg_resources.resource_filename(
+        "hotspell",
+        os.path.join(
+            "datasets", f"daily_windows_with_length_{window_length}.pickle"
+        ),
+    )
+    df = pd.read_pickle(input_file)
+    return df
 
 
 def _add_or_subtract_days(ser, days, op):

@@ -29,7 +29,7 @@ class HeatWaves:
     Notes
     -----
     Column names of metrics correspond to:
-    
+
     hwn : Heat wave number
         The annual total sum of heat wave events
     hwf : Heat wave day frequency
@@ -80,12 +80,12 @@ def get_heatwaves(
         A tuple with all months of the summer period. For the southern
         hemisphere it should be set as (12, 1, 2) or similar variants.
     max_missing_days_pct : int, default 10
-        The percentage of maximum missing days for a year to be considered valid
-        and be included in the metrics. If a summer period has been defined the
-        percentage corresponds only to this period.
+        The percentage of maximum missing days for a year to be considered
+        valid and be included in the metrics. If a summer period has been
+        defined the percentage corresponds only to this period.
     export : bool, default True
-        If True, output is exported as csv files in the same folder as the input
-        data.
+        If True, output is exported as csv files in the same folder as the
+        input data.
     metrics : bool, default True
         If True, annual metrics are computed and are exported if `export=True`.
 
@@ -133,7 +133,8 @@ def get_heatwaves(
 
 def _create_daily_windows(window_length):
     """
-    Add to each day  of the year a list of days within a window around this day.
+    Add to each day  of the year a list of days within a window around this
+    day.
 
     Parameters
     ----------
@@ -182,7 +183,7 @@ def _add_or_subtract_days(ser, days, op):
     ----------
     ser : Series or Index
     days : int or float
-    op : operator object, one of `add` or `sub` 
+    op : operator object, one of `add` or `sub`
 
     Returns
     -------
@@ -216,7 +217,7 @@ def _extend_plus_minus_one_month(months):
 def _compute_daily_thresholds(
     daily_windows, timeseries_ref_period, hw_index, summer_months
 ):
-    """ 
+    """
     Compute per day a percentile-based threshold or set an absolute threshold.
 
     Parameters
@@ -225,7 +226,7 @@ def _compute_daily_thresholds(
         The output of `_create_daily_windows`.
     timeseries_ref_period : DataFrame
         The weather data for the reference period; they are used to calculated
-        the percentile. 
+        the percentile.
     hw_index : HeatWaveIndex object
     summer_months : tuple of int
 

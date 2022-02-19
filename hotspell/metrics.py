@@ -17,7 +17,7 @@ def _get_annual_metrics(
     summer_months,
 ):
     """
-    Calculate the annual heat wave metrics attribute of a HeatWave object. 
+    Calculate the annual heat wave metrics attribute of a HeatWave object.
 
     Parameters
     ----------

@@ -3,8 +3,8 @@ import pandas as pd
 
 from .utils import (
     _compute_overall_mean,
-    _keep_or_drop_year,
     _keep_only_summer,
+    _keep_or_drop_year,
     _percent_of_days_to_days,
 )
 
@@ -69,7 +69,7 @@ def _compute_annual_metrics(df, ref_period_mean):
     )
 
     hwm = (
-        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        df.groupby([df.index.year], as_index=True)["avg_tmax"]
         .mean()
         .to_frame(name="hwm")
         .round(1)
@@ -77,26 +77,24 @@ def _compute_annual_metrics(df, ref_period_mean):
     hwm["hwm"] = np.round(hwm["hwm"] - ref_period_mean, 1)
 
     hwma = (
-        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        df.groupby([df.index.year], as_index=True)["avg_tmax"]
         .mean()
         .to_frame(name="hwma")
         .round(1)
     )
 
-    max_avg_tmax_dates = df.groupby([df.index.year], as_index=True)[
-        "avg_tmax"
-    ].transform(max)
-
-    hwa = df[df["avg_tmax"] == max_avg_tmax_dates]["max_tmax"].to_frame(
-        name="hwa"
+    hwa = (
+        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        .max()
+        .to_frame(name="hwa")
     )
-    hwa.index = hwa.index.year
     hwa["hwa"] = np.round(hwa["hwa"] - ref_period_mean, 1)
 
-    hwaa = df[df["avg_tmax"] == max_avg_tmax_dates]["max_tmax"].to_frame(
-        name="hwaa"
+    hwaa = (
+        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        .max()
+        .to_frame(name="hwaa")
     )
-    hwaa.index = hwaa.index.year
 
     annual_metrics = pd.concat(
         [hwn, hwf, hwd, hwdm, hwm, hwma, hwa, hwaa], axis=1

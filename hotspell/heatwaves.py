@@ -301,7 +301,9 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
     )
 
     if summer_months:
-        timeseries = _keep_only_summer(timeseries, summer_months)
+        timeseries = _keep_only_summer(
+            timeseries, _extend_plus_minus_one_month(summer_months)
+        )
 
     heatwave_days = timeseries.copy()
 
@@ -310,6 +312,8 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
         heatwaves=heatwaves, var=hw_index.var
     )
     heatwaves = _filter_with_min_duration(heatwaves, hw_index.min_duration)
+    if summer_months:
+        heatwaves = _keep_only_summer(heatwaves, summer_months)
 
     return heatwaves
 

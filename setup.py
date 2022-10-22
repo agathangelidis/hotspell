@@ -7,7 +7,7 @@ long_description = (this_directory / "README.rst").read_text()
 
 setup(
     name="hotspell",
-    version="0.1.2",
+    version="0.1.3",
     description="Detect heat waves from weather station data",
     author="Ilias Agathangelidis",
     packages=["hotspell"],

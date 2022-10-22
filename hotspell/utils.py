@@ -14,8 +14,8 @@ def _compute_overall_mean(timeseries, summer_months):
 
 def _import_data(filename, var, years=None):
     """
-    Read the weather data from a csv file into a DataFrame and preprocess them. 
-    
+    Read the weather data from a csv file into a DataFrame and preprocess them.
+
     It requires specific columns to be included in the csv file. If `years` is
     set, it subsets the DataFrame by the given years.
 

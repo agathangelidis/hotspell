@@ -309,7 +309,9 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
 
     heatwaves = _group_heatwave_days(heatwave_days)
     heatwaves = _compute_heatwave_properties(
-        heatwaves=heatwaves, var=hw_index.var
+        heatwaves=heatwaves,
+        var=hw_index.var,
+        min_duration=hw_index.min_duration,
     )
     heatwaves = _filter_with_min_duration(heatwaves, hw_index.min_duration)
     if summer_months:
@@ -325,7 +327,9 @@ def _group_heatwave_days(heatwaves_days):
     return heatwaves_days
 
 
-def _compute_heatwave_properties(heatwaves, var):
+def _compute_heatwave_properties(heatwaves, var, min_duration):
+    if min_duration == 1:
+        heatwaves = heatwaves[heatwaves["over"].notna()]
     heatwaves["date"] = heatwaves.index
     heatwaves_with_properties = pd.DataFrame(
         {

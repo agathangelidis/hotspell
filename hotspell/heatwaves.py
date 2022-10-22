@@ -204,14 +204,17 @@ def _extend_plus_minus_one_month(months):
     -------
     tuple of int
     """
-    months = list(months)
-    if months[0] == 1:
-        months_extended = [12, *months, months[-1] + 1]
-    elif months[-1] == 12:
-        months_extended = [months[0] - 1, *months, 1]
+    if months is None:
+        return months
     else:
-        months_extended = [months[0] - 1, *months, months[-1] + 1]
-    return tuple(sorted(months_extended))
+        months = list(months)
+        if months[0] == 1:
+            months_extended = [12, *months, months[-1] + 1]
+        elif months[-1] == 12:
+            months_extended = [months[0] - 1, *months, 1]
+        else:
+            months_extended = [months[0] - 1, *months, months[-1] + 1]
+        return tuple(sorted(months_extended))
 
 
 def _compute_daily_thresholds(

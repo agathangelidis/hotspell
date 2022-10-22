@@ -5,7 +5,10 @@ import pandas as pd
 
 
 def _compute_overall_mean(timeseries, summer_months):
-    mean = _keep_only_summer(timeseries, summer_months).mean().round(1)[0]
+    if summer_months is None:
+        mean = timeseries.mean().round(1)[0]
+    else:
+        mean = _keep_only_summer(timeseries, summer_months).mean().round(1)[0]
     return mean
 
 
@@ -66,10 +69,13 @@ def _percent_of_days_to_days(days_percent, summer_months):
         months = list(summer_months)
     else:
         months = [*range(1, 13)]
-    days = np.ceil(
-        (days_percent * 0.01)
-        * ((date(2020, months[-1] + 1, 1) - date(2020, months[0], 1)).days)
-    )
+    if summer_months:
+        days = np.ceil(
+            (days_percent * 0.01)
+            * ((date(2020, months[-1] + 1, 1) - date(2020, months[0], 1)).days)
+        )
+    else:
+        days = (days_percent * 0.01) * 365
     return days
 
 

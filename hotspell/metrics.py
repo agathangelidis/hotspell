@@ -112,7 +112,8 @@ def _add_valid_years_with_no_heatwaves(
     )
 
     timeseries = timeseries.drop(columns=["threshold", "on", "over"])
-    timeseries = _keep_only_summer(timeseries, summer_months)
+    if summer_months:
+        timeseries = _keep_only_summer(timeseries, summer_months)
     timeseries = _keep_or_drop_year(timeseries, max_missing_days_per_year)
     timeseries.index.name = "year"
     timeseries.rename(columns={"missing_days": "hwf"}, inplace=True)

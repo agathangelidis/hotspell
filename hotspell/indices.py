@@ -1,7 +1,7 @@
 class HeatWaveIndex:
     """
     A class used to represent a heat wave index.
-    
+
     Attributes
     ----------
     name : str
@@ -16,7 +16,7 @@ class HeatWaveIndex:
         fixed_thres are set, pct has precedence over fixed_thres.
     min_duration : int
         The minimum number of consecutive days should last so that a warm event
-        is considered a heat wave. 
+        is considered a heat wave.
     window_length : int
         The total number of days that a moving window has when computing the
         percentile value for each day.
@@ -58,11 +58,11 @@ def index(
         fixed_thres are set, pct has precedence over fixed_thres.
     min_duration : int
         The minimum number of consecutive days should last so that a warm event
-        is considered a heat wave. 
+        is considered a heat wave.
     window_length : int
         The total number of days that a moving window has when computing the
         percentile value for each day.
-    
+
     Returns
     -------
     HeatWaveIndex object

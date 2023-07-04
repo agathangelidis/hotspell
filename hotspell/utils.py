@@ -1,3 +1,4 @@
+from calendar import monthrange
 from datetime import date
 
 import numpy as np
@@ -70,10 +71,9 @@ def _percent_of_days_to_days(days_percent, summer_months):
     else:
         months = [*range(1, 13)]
     if summer_months:
-        days = np.ceil(
-            (days_percent * 0.01)
-            * ((date(2020, months[-1] + 1, 1) - date(2020, months[0], 1)).days)
-        )
+        number_of_summer_days = np.sum(
+            [monthrange(2020, month)[-1] for month in months])
+        days = (days_percent * 0.01) * number_of_summer_days
     else:
         days = (days_percent * 0.01) * 365
     return days

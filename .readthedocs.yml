@@ -17,8 +17,5 @@ python:
     - requirements: docs/requirements.txt
       #method: pip
 
-  
-  
-  
 #   setup_py_install: true
 #    system_packages: true

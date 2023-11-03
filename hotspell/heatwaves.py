@@ -92,7 +92,7 @@ def get_heatwaves(
     Returns
     -------
     HeatWaves object
-     """
+    """
     timeseries = _import_data(filename=filename, var=hw_index.var)
     timeseries_ref_period = timeseries.loc[ref_years[0] : ref_years[-1]]
 
@@ -145,7 +145,8 @@ def _create_daily_windows(window_length):
     -------
     Dataframe
     """
-    PRECOMPUTED = [3, 15]
+    # PRECOMPUTED = [3, 15]
+    PRECOMPUTED = []
     if window_length in PRECOMPUTED:
         df = _import_precomputed_daily_windows(window_length)
         return df
@@ -262,7 +263,9 @@ def _compute_daily_thresholds(
     else:
         daily_thresholds["threshold"] = hw_index.fixed_thres
 
-    daily_thresholds = daily_windows.join(daily_thresholds.drop("window", 1))
+    daily_thresholds = daily_windows.join(
+        daily_thresholds.drop("window", axis=1)
+    )
     return daily_thresholds
 
 

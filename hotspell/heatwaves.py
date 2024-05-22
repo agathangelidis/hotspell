@@ -118,6 +118,7 @@ def get_heatwaves(
             timeseries,
             max_missing_days_pct,
             summer_months,
+            hw_index.var,
         )
     else:
         annual_metrics = None
@@ -168,9 +169,7 @@ def _create_daily_windows(window_length):
 def _import_precomputed_daily_windows(window_length):
     input_file = pkg_resources.resource_filename(
         "hotspell",
-        os.path.join(
-            "datasets", f"daily_windows_with_length_{window_length}.pickle"
-        ),
+        os.path.join("datasets", f"daily_windows_with_length_{window_length}.pickle"),
     )
     df = pd.read_pickle(input_file)
     return df
@@ -239,9 +238,7 @@ def _compute_daily_thresholds(
     DataFrame
     """
     if summer_months:
-        daily_thresholds = _keep_only_summer(
-            daily_windows.copy(), summer_months
-        )
+        daily_thresholds = _keep_only_summer(daily_windows.copy(), summer_months)
     else:
         daily_thresholds = daily_windows.copy()
 
@@ -263,9 +260,7 @@ def _compute_daily_thresholds(
     else:
         daily_thresholds["threshold"] = hw_index.fixed_thres
 
-    daily_thresholds = daily_windows.join(
-        daily_thresholds.drop("window", axis=1)
-    )
+    daily_thresholds = daily_windows.join(daily_thresholds.drop("window", axis=1))
     return daily_thresholds
 
 
@@ -280,9 +275,7 @@ def _add_threshold_to_timeseries(timeseries, daily_thresholds):
             date=daily_thresholds.index.strftime("%m-%d"), on="date"
         )
     )
-    df = df.sort_values("fulldate").drop(
-        ["date", "fulldate", "window"], axis=1
-    )
+    df = df.sort_values("fulldate").drop(["date", "fulldate", "window"], axis=1)
     df.index = timeseries.index
     return df
 
@@ -327,9 +320,7 @@ def _find_heatwaves(timeseries, hw_index, summer_months):
 
 
 def _group_heatwave_days(heatwaves_days):
-    heatwaves_days["group"] = (
-        (heatwaves_days.over.diff(1) != 0).astype("int").cumsum()
-    )
+    heatwaves_days["group"] = (heatwaves_days.over.diff(1) != 0).astype("int").cumsum()
     return heatwaves_days
 
 
@@ -359,16 +350,12 @@ def _filter_with_min_duration(heatwaves, min_duration):
 
 
 def _export_heatwaves(heatwaves, filename, index_name):
-    output_file = (
-        f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves_events.csv"
-    )
+    output_file = f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves_events.csv"
     heatwaves.to_csv(output_file, index=False, date_format="%d/%m/%Y")
 
 
 def _export_annual_metrics(metrics, filename, index_name):
-    output_file = (
-        f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves_metrics.csv"
-    )
+    output_file = f"{os.path.splitext(filename)[0]}_{index_name}_heatwaves_metrics.csv"
     metrics.to_csv(output_file, index=True, date_format="%Y")
 
 

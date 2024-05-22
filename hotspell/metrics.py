@@ -15,6 +15,7 @@ def _get_annual_metrics(
     timeseries,
     max_missing_days_pct,
     summer_months,
+    var,
 ):
     """
     Calculate the annual heat wave metrics attribute of a HeatWave object.
@@ -31,18 +32,16 @@ def _get_annual_metrics(
     -------
     HeatWave object
     """
-    ref_period_mean = _compute_overall_mean(
-        timeseries_ref_period, summer_months
-    )
+    ref_period_mean = _compute_overall_mean(timeseries_ref_period, summer_months)
 
-    annual_metrics = _compute_annual_metrics(heatwaves, ref_period_mean)
+    annual_metrics = _compute_annual_metrics(heatwaves, ref_period_mean, var)
     annual_metrics = _add_valid_years_with_no_heatwaves(
         annual_metrics, timeseries, max_missing_days_pct, summer_months
     )
     return annual_metrics
 
 
-def _compute_annual_metrics(df, ref_period_mean):
+def _compute_annual_metrics(df, ref_period_mean, var):
     hwn = (
         df.groupby([df.index.year], as_index=True)["duration"]
         .count()
@@ -69,7 +68,7 @@ def _compute_annual_metrics(df, ref_period_mean):
     )
 
     hwm = (
-        df.groupby([df.index.year], as_index=True)["avg_tmax"]
+        df.groupby([df.index.year], as_index=True)[f"avg_{var}"]
         .mean()
         .to_frame(name="hwm")
         .round(1)
@@ -77,28 +76,26 @@ def _compute_annual_metrics(df, ref_period_mean):
     hwm["hwm"] = np.round(hwm["hwm"] - ref_period_mean, 1)
 
     hwma = (
-        df.groupby([df.index.year], as_index=True)["avg_tmax"]
+        df.groupby([df.index.year], as_index=True)[f"avg_{var}"]
         .mean()
         .to_frame(name="hwma")
         .round(1)
     )
 
     hwa = (
-        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        df.groupby([df.index.year], as_index=True)[f"max_{var}"]
         .max()
         .to_frame(name="hwa")
     )
     hwa["hwa"] = np.round(hwa["hwa"] - ref_period_mean, 1)
 
     hwaa = (
-        df.groupby([df.index.year], as_index=True)["max_tmax"]
+        df.groupby([df.index.year], as_index=True)[f"max_{var}"]
         .max()
         .to_frame(name="hwaa")
     )
 
-    annual_metrics = pd.concat(
-        [hwn, hwf, hwd, hwdm, hwm, hwma, hwa, hwaa], axis=1
-    )
+    annual_metrics = pd.concat([hwn, hwf, hwd, hwdm, hwm, hwma, hwa, hwaa], axis=1)
     annual_metrics.index.rename("year", inplace=True)
 
     return annual_metrics
